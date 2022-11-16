@@ -1,3 +1,27 @@
+"""
+MIT License
+
+Copyright (c) 2022 Yaroslav Svitlytskyi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
 import types
 import typing
 from functools import cache
@@ -5,10 +29,22 @@ from functools import cache
 
 @cache
 def get_factorial(n: int) -> int:
-    return 1 if n == 0 else n * get_factorial_n(n - 1)
+    """
+
+    Example of usage:
+    * get_factorial(5) -> 120
+    """
+
+    return 1 if n == 0 else n * get_factorial(n - 1)
 
 
 def get_fibonacci(n: int) -> float:
+    """
+
+    Example of usage:
+    * get_fibonacci(10) -> 55
+    """
+
     a = 0
     b = 1
     i = 0
@@ -22,6 +58,12 @@ def get_fibonacci(n: int) -> float:
 
 
 def get_quick_pow(a: float, n: int) -> float:
+    """
+
+    Example of usage:
+    * get_quick_pow(2, 2) -> 4
+    """
+
     w = 1
     while n != 0:
         if n % 2 == 1:
@@ -32,6 +74,12 @@ def get_quick_pow(a: float, n: int) -> float:
 
 
 def secant_method(f: types.FunctionType, start: int, end: int, eps: int) -> float:
+    """
+
+    Example of usage:
+    * secant_method(lambda x: x ** 2 - 2, 1, 3, 0.00000001) -> 1.4142...
+    """
+
     c = 0
     while True:
         if f(start) == f(end):
@@ -50,6 +98,12 @@ def secant_method(f: types.FunctionType, start: int, end: int, eps: int) -> floa
 
 
 def bisection_method(f: types.FunctionType, start: float, end: float, eps: float) -> float:
+    """
+
+    Example of usage:
+    * bisection_method(lambda x: x ** 2 - 2, 0.1, 2, 0.0001) -> 1.4142...
+    """
+
     if start == 0:
         return start
     if end == 0:
@@ -71,6 +125,12 @@ def bisection_method(f: types.FunctionType, start: float, end: float, eps: float
 
 
 def get_sqrt_by_newton_method(x: int, eps: int) -> float:
+    """
+
+    Example of usage:
+    * get_sqrt_by_newton_method(2, 0.0001) -> 1.4142...
+    """
+
     a = 1
     b = x
     while True:
@@ -89,12 +149,15 @@ def get_area_by_trapezoidal_rule(
         start: float,
         end: float,
         n: typing.Union[int]) -> float:
+    """
+
+    Example of usage:
+    * get_area_by_trapezoidal_rule(math.sin, 0, math.pi, 10000) -> 1.99999....
+    """
+
     s = 0
-
     h = (end - start) / n
-
-    prev_fb = None
-    prev_ffb = None
+    prev_fb, prev_ffb = None
 
     for i in range(n):
         if prev_fb is None:
@@ -117,14 +180,48 @@ def get_area_by_trapezoidal_rule(
     return s
 
 
-def get_difference_value(f: types.FunctionType, x: float, dx: float) -> float:
+def get_1_difference_value(f: types.FunctionType, x: float, dx: float) -> float:
+    """
+
+    Example of usage:
+    * get_difference_value(lambda x: x ** 2 - 2, 1, 0.000001) -> 2.0000....
+    * get_difference_value(math.sin, 1, 0.000001) -> 0.54....
+
+    !Important information:
+    The best delta x is 0.000001 for every case
+    """
+
     fa = f(x)
     x += dx
     fb = f(x)
     return (fb - fa) / dx
 
 
+def get_2_difference_value(f: types.FunctionType, x: float, dx: float) -> float:
+    """
+
+    Example of usage:
+    * get_difference_value(math.sin, 1, 0.000001) -> -0.84....
+
+    !Important information:
+    The best delta x is 0.000001 for every case
+    """
+
+    fa = f(x)
+    x += dx
+    fb = f(x)
+    x += dx
+    fc = f(x)
+    return (fc - 2 * fb + fa) / (dx * dx)
+
+
 def quick_sort(src: list[typing.Any]):
+    """
+
+    Example of usage:
+    *
+    """
+
     less = []
     equal = []
     greater = []
@@ -168,6 +265,16 @@ def calculate_reversed_polish_notation(src: str) -> float:
 
 
 def get_sqrt_of_2_by_taylor_series(eps: float = 0.000000000000001) -> float:
+    """
+
+    Example of usage:
+    *  get_sqrt_of_2_by_taylor_series() -> 1.4142...
+
+    !Important information:
+    * This function uses a method of taylor series, which
+    * consists of such formula: (f**(n)(Xn) / n!) * (Xn - X0)
+    """
+
     diff = 10000
     n = 1
     s = 1
@@ -187,6 +294,12 @@ def get_sqrt_of_2_by_taylor_series(eps: float = 0.000000000000001) -> float:
 
 
 def find_first_and_second_max(src: list[float]) -> tuple[float, float]:
+    """
+    Example of usage:
+    * find_first_and_second_max([1, 2, 3, 4]) -> (4, 3)
+    * find_first_and_second_max([-8, -3, -2, -10]) -> (-2, -3)
+    """
+
     if len(src) == 0:
         return 0, 0
 
@@ -224,3 +337,71 @@ def ask_user_to_input_numbers() -> list[float]:
         if q:
             break
     return r
+
+
+def ddd(x: float, epsilon: float = 0.000001):
+    """
+
+    Example of usage:
+    * ddd(0.99) -> 1.4142...
+    """
+
+    suma = 1
+    an = 1
+    n = 0
+    while True:
+        an *= (-x * (2 * n - 1)) / (2 * (n + 1))
+        suma += an
+        n += 1
+        if abs(an) < epsilon:
+            return suma
+
+
+def get_taylor_series_example(n: float, eps: float):
+    """
+
+    Example of usage:
+    * get_taylor_series_example(10, 0.00001) -> ...
+    """
+
+    if n >= 1:
+        print("Your 'n' param should be less than 1")
+        return 0
+
+    suma = 1
+    res = 1
+    x = 1
+    while abs(res) >= eps:
+        if x % 2 == 0:
+            res = ((get_factorial(2 * x)) / ((1 - 2 * x) * (get_factorial(x) ** 2) * 4 ** x)) * n ** x
+            suma += res
+        else:
+            res = -((get_factorial(2 * x)) / ((1 - 2 * x) * (get_factorial(x) ** 2) * 4 ** x)) * n ** x
+            suma += res
+        x += 1
+
+    return suma
+
+
+def binary_search(src: list[typing.Union[int, float]], x: float) -> int:
+    """
+
+    Example of usage:
+    * binary_search([1, 2, 3], 10) -> -1
+    * binary_search([1, 2, 3], 2) -> 1
+    """
+
+    mid = start = 0
+    end = len(src) - 1
+
+    while start <= end:
+        mid = (start + end) // 2
+
+        if src[mid] < x:
+            start = mid + 1
+        elif src[mid] > x:
+            end = mid - 1
+        else:
+            return mid
+
+    return -1
