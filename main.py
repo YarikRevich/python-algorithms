@@ -85,10 +85,10 @@ def get_sqrt_by_newton_method(x: int, eps: int) -> float:
 
 
 def get_area_by_trapezoidal_rule(
-        f: types.FunctionType,
+        f: typing.Any,
         start: float,
         end: float,
-        n: typing.Union[float, typing.SupportsIndex]) -> float:
+        n: typing.Union[int]) -> float:
     s = 0
 
     h = (end - start) / n
@@ -110,7 +110,7 @@ def get_area_by_trapezoidal_rule(
         else:
             ffa = prev_ffb
 
-        ffb = fun(fb)
+        ffb = f(fb)
         prev_ffb = ffb
 
         s += (ffa + ffb) / 2 * h
@@ -184,3 +184,43 @@ def get_sqrt_of_2_by_taylor_series(eps: float = 0.000000000000001) -> float:
 
         n += 1
     return s
+
+
+def find_first_and_second_max(src: list[float]) -> tuple[float, float]:
+    if len(src) == 0:
+        return 0, 0
+
+    max_2 = max_1 = src[0]
+    for i in src:
+        if i > max_1:
+            max_2 = max_1
+            max_1 = i
+        elif i < max_1 and (i > max_2 or max_1 == max_2):
+            max_2 = i
+    return max_1, max_2
+
+
+def ask_user_to_input_numbers() -> list[float]:
+    r = []
+    while True:
+        x = 0
+        try:
+            x = float(input("Please, pass your number: "))
+        except ValueError:
+            print("Your value should be of type 'float', try again")
+            continue
+        r.append(x)
+
+        q = False
+        while True:
+            w = input("If you want to stop, write 'q'. If you want to continue, write 'c': ")
+            if w == "q" or w == "c":
+                if w == "q":
+                    q = True
+                break
+            else:
+                print("Please, chose correct answer")
+                continue
+        if q:
+            break
+    return r
