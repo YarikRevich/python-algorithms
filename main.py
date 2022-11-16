@@ -88,7 +88,7 @@ def get_area_by_trapezoidal_rule(
         f: types.FunctionType,
         start: float,
         end: float,
-        n: typing.Optional[float, typing.SupportsIndex]) -> float:
+        n: typing.Union[float, typing.SupportsIndex]) -> float:
     s = 0
 
     h = (end - start) / n
@@ -166,3 +166,21 @@ def calculate_reversed_polish_notation(src: str) -> float:
         operands.append(float(token))
     return operands.pop()
 
+
+def get_sqrt_of_2_by_taylor_series(eps: float = 0.000000000000001) -> float:
+    diff = 10000
+    n = 1
+    s = 1
+    c = 1
+    while diff > eps:
+        c *= ((-2 * n + 3) * 0.999) / (2 * n)
+        s += c
+
+        diff_c = c
+        if diff_c < 0:
+            diff_c *= -1
+
+        diff = diff_c
+
+        n += 1
+    return s
